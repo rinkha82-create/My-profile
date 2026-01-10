@@ -3,18 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Glass UI Profile</title>
+<title>Glass Profile</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Kanit',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Kanit',sans-serif}
 
 body{
     height:100vh;
@@ -25,29 +20,21 @@ body{
     overflow:hidden;
 }
 
-/* video background */
-.video-background{
+/* video bg */
+video{
     position:fixed;
     inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
     z-index:-1;
-    pointer-events:none;
-}
-.video-background iframe{
-    width:100vw;
-    height:56.25vw;
-    min-height:100vh;
-    min-width:177.77vh;
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
 }
 
 /* card */
 .profile-card{
     position:relative;
-    width:380px;
-    padding:40px 30px;
+    width:440px;          /* จาก 380 → 460 */
+    padding:70px 30px;    /* เพิ่มพื้นที่ด้านใน */
     border-radius:22px;
     text-align:center;
     color:#fff;
@@ -66,21 +53,20 @@ body{
     margin-bottom:20px;
 }
 
-h2{
-    font-size:24px;
-    margin-bottom:8px;
-}
-p{
-    font-size:14px;
-    color:rgba(255,255,255,.75);
-    margin-bottom:30px;
-}
+h2{font-size:24px;margin-bottom:8px}
+p{font-size:14px;color:rgba(255,255,255,.75);margin-bottom:30px}
 
-/* sound button */
-.sound-btn{
+/* ===== sound left top ===== */
+.sound-wrapper{
     position:absolute;
     top:14px;
-    right:14px;
+    left:14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.sound-btn{
     width:38px;
     height:38px;
     border-radius:50%;
@@ -93,9 +79,44 @@ p{
     justify-content:center;
     transition:.3s;
 }
-.sound-btn:hover{
-    transform:scale(1.1);
-    background:rgba(255,255,255,.3);
+.sound-btn:hover{transform:scale(1.1)}
+
+.mini-volume{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 10px;
+    border-radius:20px;
+    background:rgba(0,0,0,.45);
+    backdrop-filter:blur(10px);
+    opacity:0;
+    transform:translateX(-10px);
+    pointer-events:none;
+    transition:.3s;
+}
+
+.sound-wrapper:hover .mini-volume{
+    opacity:1;
+    transform:translateX(0);
+    pointer-events:auto;
+}
+
+.mini-volume i{font-size:12px;opacity:.8}
+
+.mini-volume input{
+    width:70px;
+    height:4px;
+    -webkit-appearance:none;
+    background:rgba(255,255,255,.4);
+    border-radius:4px;
+}
+.mini-volume input::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#fff;
+    cursor:pointer;
 }
 
 /* links */
@@ -104,6 +125,7 @@ p{
     flex-direction:column;
     gap:12px;
 }
+
 .link-item{
     display:flex;
     align-items:center;
@@ -114,48 +136,65 @@ p{
     text-decoration:none;
     color:#fff;
     background:rgba(255,255,255,.15);
-    backdrop-filter:blur(6px);
     border:1px solid rgba(255,255,255,.2);
     transition:.3s;
 }
-.link-item:hover{
-    transform:scale(1.05);
-    background:rgba(255,255,255,.25);
+.link-item:hover{transform:scale(1.05)}
+
+.yt:hover{color:#ff0000}
+.tt:hover{color:#00f2ea}
+.dn:hover{color:#00ffa6}
+.dc:hover{color:#5865f2}
+
+/* hover background ตามแอป */
+.yt:hover{
+    background:rgba(255, 0, 0, 0.25);
+    border-color:#ff0000;
+    color:#fff;
 }
 
-.yt:hover{color:#ff0000;}
-.tt:hover{color:#00f2ea;}
-.dn:hover{color:#00ffa6;}
-.dc:hover{color:#5865f2;}
+.tt:hover{
+    background:rgba(0, 242, 234, 0.25);
+    border-color:#00f2ea;
+    color:#000;
+}
+
+.dn:hover{
+    background:rgba(0, 255, 166, 0.25);
+    border-color:#00ffa6;
+    color:#000;
+}
+
+.dc:hover{
+    background:rgba(88, 101, 242, 0.25);
+    border-color:#5865f2;
+    color:#fff;
+}
 
 @media(max-width:420px){
-    .profile-card{width:90%;}
+    .profile-card{width:90%}
 }
 </style>
 </head>
 <body>
 
-<!-- background video (ภาพอย่างเดียว) -->
-<div class="video-background">
-<iframe
-src="https://www.youtube.com/embed/CzAdYE4uzSA?autoplay=1&mute=1&loop=1&playlist=CzAdYE4uzSA&controls=0&playsinline=1&rel=0"
-allow="autoplay">
-</iframe>
-</div>
+<!-- background video -->
+<video src="bg.mp4" autoplay muted loop playsinline></video>
 
-<!-- audio only -->
-<iframe
-id="audioPlayer"
-src="https://www.youtube.com/embed/6HJjhZ-jloI?autoplay=1&mute=1&loop=1&playlist=6HJjhZ-jloI&controls=0"
-allow="autoplay"
-style="width:1px;height:1px;opacity:0;pointer-events:none;">
-</iframe>
+<!-- music -->
+<audio id="music" src="music.mp3" loop autoplay></audio>
 
 <div class="profile-card">
 
-<button id="soundBtn" class="sound-btn">
-<i class="fa-solid fa-volume-xmark"></i>
-</button>
+<div class="sound-wrapper">
+    <button id="soundBtn" class="sound-btn">
+        <i class="fa-solid fa-volume-high"></i>
+    </button>
+    <div class="mini-volume">
+        <i class="fa-solid fa-volume-low"></i>
+        <input type="range" id="volumeSlider" min="0" max="100" value="20">
+    </div>
+</div>
 
 <img src="https://img5.pic.in.th/file/secure-sv1/607686154_1573392687037009_1407689754962928915_n.jpg" class="profile-img">
 <h2>...</h2>
@@ -165,38 +204,52 @@ style="width:1px;height:1px;opacity:0;pointer-events:none;">
 <a href="https://www.youtube.com/@RUSORURA/posts" class="link-item yt" target="_blank">
 <i class="fa-brands fa-youtube"></i>YouTube
 </a>
-
-<a href="https://www.tiktok.com/@maiconhighstory?_r=1&_t=ZS-92miqV5q20v" class="link-item tt" target="_blank">
+<a href="https://www.tiktok.com/@maiconhighstory" class="link-item tt" target="_blank">
 <i class="fa-brands fa-tiktok"></i>TikTok
 </a>
-
 <a href="https://ezdn.app/Maicon" class="link-item dn" target="_blank">
 Donate
 </a>
-
 <a href="https://discord.gg/xtugrpr3Xp" class="link-item dc" target="_blank">
 <i class="fa-brands fa-discord"></i>Discord
 </a>
 </div>
+
 </div>
 
 <script>
-const btn = document.getElementById("soundBtn");
-const audio = document.getElementById("audioPlayer");
-let muted = true;
-
-btn.onclick = () => {
-    audio.src = muted
-        ? audio.src.replace("&mute=1", "&mute=0")
-        : audio.src.replace("&mute=0", "&mute=1");
-
-    btn.innerHTML = muted
-        ? '<i class="fa-solid fa-volume-high"></i>'
-        : '<i class="fa-solid fa-volume-xmark"></i>';
-
-    muted = !muted;
-};
-</script>
+    const music = document.getElementById("music");
+    const btn = document.getElementById("soundBtn");
+    const slider = document.getElementById("volumeSlider");
+    
+    /* เริ่มต้น: ปิดเสียง + ไอคอน mute */
+    music.volume = 0.2;
+    music.pause();
+    btn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+    
+    /* toggle */
+    btn.onclick = () => {
+        if (music.paused) {
+            music.play();
+            btn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+        } else {
+            music.pause();
+            btn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+        }
+    };
+    
+    /* volume */
+    slider.addEventListener("input", () => {
+        music.volume = slider.value / 100;
+    
+        if (music.volume === 0) {
+            btn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+        } else if (!music.paused) {
+            btn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+        }
+    });
+    </script>
+    
 
 </body>
 </html>
